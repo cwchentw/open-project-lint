@@ -6,7 +6,7 @@ lint ()
     for __readme in "$__project"/README*; do
         if ! [ -f "$__readme" ]; then continue; fi
 
-        __no_readme="$no_readme $readme"
+        __no_readme="$__no_readme $__readme"
 
         __file_extension="${__readme##*.}"
 
