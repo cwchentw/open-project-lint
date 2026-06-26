@@ -18,13 +18,9 @@ lint ()
             */tools|*/scripts) ;;
             */node_modules|*/local) ;;
             *)
-                if [ -z "$ERROR_MESSAGE" ]; then
-                    ERROR_MESSAGE="Not a recommended directory: $__directory"
-                else
-                    ERROR_MESSAGE="${ERROR_MESSAGE}\nNot a recommended directory: $__directory"
-                fi
-                
+                ERROR_MESSAGE="$(JOIN "$ERROR_MESSAGE" "Not a recommended directory: $__directory" "\n")"
                 EXIT_STATUS=1
+                ;;
         esac
     done
 
