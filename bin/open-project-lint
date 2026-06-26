@@ -1,0 +1,86 @@
+#!/bin/sh
+
+HELP_INFO ()
+{
+    echo "Usage: $0 path/to/project"
+}
+
+project="$1"
+project="${project%/}"
+if ! [ -d "$project" ]; then
+    HELP_INFO >&2
+    exit 1
+fi
+
+
+# Default to no issue.
+exit_code=0
+
+
+# Check LICENSE
+license="$project/LICENSE"
+if ! [ -f "$license" ]; then
+    echo "No LICENSE file: $license" >&2
+    exit_code=1
+fi
+
+
+# Check README
+no_readme=""
+for readme in "$project"/README*; do
+    if ! [ -f "$readme" ]; then continue; fi
+
+    no_readme="$no_readme $readme"
+
+    file_extension="${readme##*.}"
+
+    case "$file_extension" in
+    md|markdown|mdown|mkdn) ;;
+    rst) ;;
+    asciidoc|adoc|asc) ;;
+    mediawiki|wiki) ;;
+    org) ;;
+    textile) ;;
+    txt)
+        echo "README.txt is not recommended due to no syntax highlighting: $readme" >&2
+        exit_code=1;;
+    "")
+        echo "Plain README is not recommended due to no syntax highlighting: $readme" >&2
+        exit_code=1;;
+    *)
+        echo "Invalid README file extension: $readme" >&2
+    esac
+done
+
+if [ "$no_readme" = "" ]; then
+    echo "No README.md file: ${project}/README.md" >&2
+    exit_code=1
+fi
+
+if [ $(echo "$no_readme" | wc -w) -gt 1 ]; then
+    echo "Duplicated README files: $no_readme" >&2
+    exit_code=1
+fi
+
+
+# Check directory structure
+for directory in "$project"/*; do
+    if ! [ -d "$directory" ]; then continue; fi
+
+    case "$directory" in
+    */bin|*/libexec) ;;
+    */lib|*/src) ;;
+    */share) ;;
+    */examples) ;;
+    */docs) ;;
+    */tools|*/scripts) ;;
+    */node_modules|*/local) ;;
+    *)
+        echo "Not a recommended directory: $directory" >&2
+        exit_code=1
+    esac
+done
+
+
+# Fails on CI/CD
+exit "$exit_code"
