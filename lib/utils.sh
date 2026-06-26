@@ -1,3 +1,8 @@
+HELP_INFO ()
+{
+    echo "Usage: $0 path/to/project"
+}
+
 JOIN ()
 (
     __output="$1"

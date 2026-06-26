@@ -1,17 +1,17 @@
 #!/bin/sh
 
-HELP_INFO ()
-{
-    echo "Usage: $0 path/to/project"
-}
-
 CWD=$(CDPATH='' cd -- "$(dirname -- "$0")" && pwd) || exit 1
 . "${CWD}/../lib/utils.sh"
 
 project="$1"
+if [ -z "$project" ]; then
+    HELP_INFO >&2
+    exit 1
+fi
+
 project="${project%/}"
 if ! [ -d "$project" ]; then
-    HELP_INFO >&2
+    echo "Not a valid directory: $project" >&2
     exit 1
 fi
 
