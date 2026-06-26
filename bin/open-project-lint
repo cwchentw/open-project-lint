@@ -5,6 +5,9 @@ HELP_INFO ()
     echo "Usage: $0 path/to/project"
 }
 
+CWD=$(CDPATH='' cd -- "$(dirname -- "$0")" && pwd) || exit 1
+. "${CWD}/../lib/utils.sh"
+
 project="$1"
 project="${project%/}"
 if ! [ -d "$project" ]; then
@@ -16,7 +19,6 @@ fi
 SUMMARY=
 MESSAGE=
 EXIT_STATUS=0
-CWD=$(CDPATH='' cd -- "$(dirname -- "$0")" && pwd) || exit 1
 for rule in "$CWD"/../lib/rule/*.sh; do
     . "$rule"
     lint "$project"

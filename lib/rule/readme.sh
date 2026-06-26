@@ -19,15 +19,15 @@ lint ()
         textile) ;;
         txt)
             ERROR_SUMMARY="README file format not recommended"
-            ERROR_MESSAGE="README.txt is not recommended due to no syntax highlighting: $__readme"
+            ERROR_MESSAGE=$(JOIN_NEWLINE "README.txt is not recommended due to no syntax highlighting: $__readme")
             EXIT_STATUS=1;;
         "")
             ERROR_SUMMARY="README file format not recommended"
-            ERROR_MESSAGE="${ERROR_MESSAGE}\nPlain README is not recommended due to no syntax highlighting: $__readme"
+            ERROR_MESSAGE=$(JOIN_NEWLINE "Plain README is not recommended due to no syntax highlighting: $__readme")
             EXIT_STATUS=1;;
         *)
-            ERROR_SUMMARY="Invalid README file format"
-            ERROR_MESSAGE="${ERROR_MESSAGE}\nInvalid README file extension: $__readme"
+            ERROR_SUMMARY=$(JOIN_NEWLINE "Invalid README file format" "\n")
+            ERROR_MESSAGE=$(JOIN_NEWLINE "Invalid README file extension: $__readme")
             EXIT_STATUS=1;;
         esac
     done
@@ -39,8 +39,8 @@ lint ()
     fi
 
     if [ $(echo "$__no_readme" | wc -w) -gt 1 ]; then
-        ERROR_SUMMARY="Duplicated README files"
-        ERROR_MESSAGE="${ERROR_MESSAGE}\nDuplicated README files: $__no_readme"
+        ERROR_SUMMARY=$(JOIN_NEWLINE "Duplicated README files")
+        ERROR_MESSAGE=$(JOIN_NEWLINE "Duplicated README files: $__no_readme")
         EXIT_STATUS=1
     fi
 }
