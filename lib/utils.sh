@@ -1,10 +1,11 @@
-JOIN_NEWLINE ()
+JOIN ()
 (
-    __output=
-    __string="$1"
+    __output="$1"
+    __string="$2"
+    __sep="$3"
 
     if [ -n "$__output" ]; then
-        __output="$__output$__string\n"
+        __output="$__output$__sep$__string"
     else
         __output="$__string"
     fi
