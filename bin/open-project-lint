@@ -12,14 +12,10 @@ if ! [ -d "$project" ]; then
     exit 1
 fi
 
-
-# Default to no issue.
-exit_code=0
-
-
 # Lint by rules
 SUMMARY=
 MESSAGE=
+EXIT_STATUS=0
 CWD=$(CDPATH='' cd -- "$(dirname -- "$0")" && pwd) || exit 1
 for rule in "$CWD"/../lib/rule/*.sh; do
     . "$rule"
@@ -32,33 +28,11 @@ for rule in "$CWD"/../lib/rule/*.sh; do
     if [ -n "$ERROR_MESSAGE" ]; then
         MESSAGE="${MESSAGE}${ERROR_MESSAGE}\n"
     fi
-
-    if [ "$EXIT_STATUS" -ne 0 ]; then
-        exit_code="$EXIT_STATUS"
-    fi
 done
 
 if [ -n "$MESSAGE" ]; then
     printf "%b" "$MESSAGE"
 fi
 
-
-# Check for common VCS
-no_vcs=1
-for vcs_sub_directory in .git .hg .svn; do
-    vcs_directory="$project/$vcs_sub_directory"
-
-    if [ -d "$vcs_directory" ]; then
-        no_vcs=0
-        break
-    fi
-done
-
-if [ "$no_vcs" -ne 0 ]; then
-    echo "No version source control detected. Git is recommended" >&2
-    exit_code=1
-fi
-
-
 # Fails on CI/CD
-exit "$exit_code"
+exit "$EXIT_STATUS"
