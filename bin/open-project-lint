@@ -43,25 +43,6 @@ if [ -n "$MESSAGE" ]; then
 fi
 
 
-# Check directory structure
-for directory in "$project"/*; do
-    if ! [ -d "$directory" ]; then continue; fi
-
-    case "$directory" in
-    */bin|*/libexec) ;;
-    */lib|*/src) ;;
-    */share) ;;
-    */examples) ;;
-    */docs) ;;
-    */tools|*/scripts) ;;
-    */node_modules|*/local) ;;
-    *)
-        echo "Not a recommended directory: $directory" >&2
-        exit_code=1
-    esac
-done
-
-
 # Check for common VCS
 no_vcs=1
 for vcs_sub_directory in .git .hg .svn; do
