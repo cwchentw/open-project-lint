@@ -82,5 +82,22 @@ for directory in "$project"/*; do
 done
 
 
+# Check for common VCS
+no_vcs=1
+for vcs_sub_directory in .git .hg .svn; do
+    vcs_directory="$project/$vcs_sub_directory"
+
+    if [ -d "$vcs_directory" ]; then
+        no_vcs=0
+        break
+    fi
+done
+
+if [ "$no_vcs" -ne 0 ]; then
+    echo "No version source control detected. Git is recommended" >&2
+    exit_code=1
+fi
+
+
 # Fails on CI/CD
 exit "$exit_code"
