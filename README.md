@@ -21,7 +21,7 @@ $ open-project-lint path/to/project
 ## Note
 
 Even the author’s own projects sometimes fail the checks.  
-That’s intentional — open-project-lint is meant as guidance, not law.
+That’s intentional — `open-project-lint` is meant as guidance, not law.
 
 ## License
 
