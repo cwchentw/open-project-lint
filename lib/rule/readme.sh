@@ -28,6 +28,7 @@ lint ()
         *)
             ERROR_SUMMARY="Invalid README file format"
             ERROR_MESSAGE="${ERROR_MESSAGE}\nInvalid README file extension: $__readme"
+            EXIT_STATUS=1;;
         esac
     done
 
