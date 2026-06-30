@@ -1,0 +1,3 @@
+# Ignore some open-project-lint rules
+common-vcs
+flat-project

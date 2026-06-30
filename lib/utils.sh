@@ -17,3 +17,12 @@ JOIN ()
 
     echo "$__output"
 )
+
+PARSE_PROJECTIGNORE ()
+{
+    __project="$1"
+    __ignore_file="$__project/.projectignore"
+    if [ -f "$__ignore_file" ]; then
+        grep -v '^[[:space:]]*#' "$__ignore_file" | grep -v '^[[:space:]]*$'
+    fi
+}
