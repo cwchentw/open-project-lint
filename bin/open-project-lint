@@ -21,13 +21,13 @@ MESSAGE=
 EXIT_STATUS=0
 for rule in "$CWD"/../lib/rule/*.sh; do
     blacklist="$(PARSE_PROJECTIGNORE "$project")"
+
     rule_name="$(basename "$rule" .sh)"
     case "$blacklist" in
     *"$rule_name"*)
         continue
         ;;
     esac
-
 
     . "$rule"
     lint "$project"
