@@ -1,7 +1,10 @@
 lint ()
 {
-    __project="$1"
+    ERROR_SUMMARY=
+    ERROR_MESSAGE=
     EXIT_STATUS=0
+
+    __project="$1"
     __no_vcs=1
     for __vcs_sub_directory in .git .hg .svn; do
         __vcs_directory="$__project/$__vcs_sub_directory"

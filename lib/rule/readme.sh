@@ -1,8 +1,9 @@
 lint ()
 {
-    EXIT_STATUS=0
     ERROR_SUMMARY=
     ERROR_MESSAGE=
+    EXIT_STATUS=0
+
     __project="$1"
     __no_readme=""
     __not_recommended=0

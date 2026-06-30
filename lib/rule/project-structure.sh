@@ -1,8 +1,10 @@
 lint ()
 {
-    EXIT_STATUS=0
-    __project="$1"
+    ERROR_SUMMARY=
     ERROR_MESSAGE=
+    EXIT_STATUS=0
+
+    __project="$1"
     for __directory in "$__project"/*; do
         if ! [ -d "$__directory" ]; then continue; fi
 

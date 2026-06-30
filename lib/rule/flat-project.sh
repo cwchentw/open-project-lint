@@ -1,6 +1,9 @@
 lint ()
 {
+    ERROR_SUMMARY=
+    ERROR_MESSAGE=
     EXIT_STATUS=0
+
     __project="$1"
     __no_directory=1
     for __directory in "$__project"/*; do
